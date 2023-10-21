@@ -4,7 +4,7 @@ import {
     BannersApi,
     BorrelkaartgroupsApi,
     Configuration,
-    ContainersApi,
+    ContainersApi, DebtorsApi, EventsApi,
     FilesApi,
     InvoicesApi,
     PayoutRequestsApi,
@@ -72,6 +72,10 @@ export class ApiService {
 
     private readonly _openBannerApi: BannersApi;
 
+    private readonly _eventsApi: EventsApi;
+
+    private readonly _debtorsApi: DebtorsApi;
+
     constructor(basePath: string) {
         const withKeyConfiguration = new Configuration({
             apiKey: () => `Bearer ${getTokenFromStorage().token}`,
@@ -96,6 +100,8 @@ export class ApiService {
         this._vatGroupsApi = new VatGroupsApi(withKeyConfiguration, basePath, axiosInstance);
         this._stripeApi = new StripeApi(withKeyConfiguration, basePath, axiosInstance);
         this._rbacApi = new RbacApi(withKeyConfiguration, basePath, axiosInstance);
+        this._eventsApi = new EventsApi(withKeyConfiguration, basePath, axiosInstance);
+        this._debtorsApi = new DebtorsApi(withKeyConfiguration, basePath, axiosInstance);
     }
 
     get authenticate(): AuthenticateApi {
@@ -174,4 +180,11 @@ export class ApiService {
         return this._openBannerApi;
     }
 
+    get events(): EventsApi {
+        return this._eventsApi;
+    }
+
+    get debtor(): DebtorsApi {
+        return this._debtorsApiApi;
+    }
 }
